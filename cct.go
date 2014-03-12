@@ -8,13 +8,24 @@ type Tree interface {
 	// Returns the root node of the tree
 	Root() Node
 	// Adds a child to the provided parent.
-	// Returns true, nil if added successfully, false, currernt parent if
+	// Returns true, nil if added successfully,
+	// false, current parent if
 	// the node already exists in the tree
-	Add(parent Node, child Node) (bool, Node)
+	Add(parent Node, child Node) (success bool, otherParent Node)
 	// Get the parent of the provided node
-	Parent(child Node) Node
+	Parent(child Node) (parent Node)
 	// Depth first walk of the tree calling the provided function for each node visited
 	Walk(func(depth int, node Node))
+
+	// Remove(node Node) (bool)
+	// GoWalk() chan<- Visit
+	// Children(parent Node) []Node
+	//
+}
+
+type Visit struct {
+	N Node
+	I int
 }
 
 // Node, an interface{} type store in the tree.
@@ -43,7 +54,7 @@ func NewTree() (Tree, Node) {
 
 // Creates a tree that allow non pointer node.
 // Client beware, do not mutate object or pass non keyable objects
-func NewTree_ImmutableNodes() (Tree, Node) {
+func NewTree_MutableNodes() (Tree, Node) {
 	t := &ctree{
 		make(map[Node][]Node),
 		make(map[Node]Node),
@@ -120,8 +131,8 @@ func BuildTree() Builder {
 	b := &builder{t, r, nil}
 	return b
 }
-func BuildTree_ImmutableNodes() Builder {
-	t, r := NewTree_ImmutableNodes()
+func BuildTree_MutableNodes() Builder {
+	t, r := NewTree_MutableNodes()
 	b := &builder{t, r, nil}
 	return b
 }
