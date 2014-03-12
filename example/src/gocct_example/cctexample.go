@@ -1,9 +1,9 @@
-package gocct
+package main
 
 import (
+	"github.com/millergarym/gocct"
 	"fmt"
 	"strings"
-	"testing"
 )
 
 // Testing structure
@@ -11,8 +11,8 @@ type mys struct {
 	s string
 }
 
-func TestExample(t *testing.T) {
-	ct, r := NewTree()
+func main() {
+	ct, r := gocct.NewTree()
 	a := mys{"a"}
 	ct.Add(r, &a)
 	b := mys{"b"}
@@ -29,7 +29,7 @@ func TestExample(t *testing.T) {
 	d := "d"
 	d2 := "d"
 	slice := &[]int{1, 2, 3, 4}
-	BuildTree_ImmutableNodes().
+	gocct.BuildTree_ImmutableNodes().
 		Add(mys{"a"}).Down().
 		Add(&mys{"b"}).
 		Add(mys{"c"}).
@@ -41,7 +41,7 @@ func TestExample(t *testing.T) {
 }
 
 // Function given to the walker for printing nodes
-func p(d int, n Node) {
+func p(d int, n gocct.Node) {
 	s := strings.Repeat(" ", d)
 	//	fmt.Println( reflect.TypeOf( n ) )
 	switch v := n.(type) {
