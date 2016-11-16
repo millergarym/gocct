@@ -19,7 +19,9 @@ type Tree interface {
 
 	// Remove(node Node) (bool)
 	// GoWalk() chan<- Visit
-	// Children(parent Node) []Node
+
+	// Children of parent
+	Children(parent Node) []Node
 	//
 }
 
@@ -98,6 +100,10 @@ func (t *ctree) Add(p Node, c Node) (bool, Node) {
 
 func (t *ctree) Parent(c Node) Node {
 	return t.c2[c]
+}
+
+func (t *ctree) Children(p Node) []Node {
+	return t.p2[p]
 }
 
 // A depth first walk of the tree calling the provided function at each node
